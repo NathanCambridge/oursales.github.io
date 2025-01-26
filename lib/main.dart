@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:oursales/routes/router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -17,10 +18,26 @@ class _OurSalesState extends State<OurSales> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ShadApp.router(
+    return ShadApp.materialRouter(
       routerConfig: AppRoutes().router,
       title: 'oursales',
+      theme: ShadThemeData(
+        disableSecondaryBorder: true,
+          colorScheme: ShadZincColorScheme.light(), brightness: Brightness.light,
+          textTheme: ShadTextTheme.fromGoogleFont(
+            GoogleFonts.openSans,
+
+          ),
+        primaryButtonTheme: ShadButtonTheme(
+          gradient: LinearGradient(
+            colors: [Colors.teal, Colors.redAccent],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+        )
+      ),
       darkTheme: ShadThemeData(
+        disableSecondaryBorder: true,
         breakpoints: ShadBreakpoints(
           tn: 0, // tiny
           sm: 640, // small
@@ -30,15 +47,24 @@ class _OurSalesState extends State<OurSales> {
           xxl: 1536, // extra extra large
         ),
         brightness: Brightness.dark,
+        textTheme: ShadTextTheme.fromGoogleFont(
+          GoogleFonts.openSans,
+        ),
         colorScheme: const ShadSlateColorScheme.dark(
           background: Colors.black,
         ),
         primaryButtonTheme: const ShadButtonTheme(
-          backgroundColor: Colors.cyan,
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.cyan],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+          // backgroundColor: Colors.cyan,
         ),
 
       ),
-      themeMode: ThemeMode.dark,
+
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
     );
   }
