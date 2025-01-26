@@ -37,7 +37,6 @@ class _InvoiceListPageState extends State<InvoiceListPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 20,
           right: 20,
         ),
         child: Row(
@@ -45,74 +44,77 @@ class _InvoiceListPageState extends State<InvoiceListPage> {
             SideMenu(),
             Expanded(
               flex: 6,
-              child: Column(
-                spacing: 15,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ShadButton(
-                        child: Text(
-                          'New Invoice',
-                          style: textTheme.small.copyWith(
-                              fontSize: kWidgetFontSize,
-                              color: colorTheme.primaryForeground),
-                        ),
-                        onPressed: (){
-                          context.go('/invoice/create_new_invoice');
-                        },
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        spacing: 15,
-                        children: [
-                          ShadDatePicker.range(
-                            placeholder: Text('Start - End Date',
-                                style: textTheme.small
-                                    .copyWith(fontSize: kWidgetFontSize)),
-                            closeOnSelection: true,
-                            hideWeekdayNames: true,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  spacing: 15,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ShadButton(
+                          child: Text(
+                            'New Invoice',
+                            style: textTheme.small.copyWith(
+                                fontSize: kWidgetFontSize,
+                                color: colorTheme.primaryForeground),
                           ),
-                          ShadButton.outline(
-                            child: Text(
-                              'Fetch Data',
-                              style: textTheme.small
-                                  .copyWith(fontSize: kWidgetFontSize),
+                          onPressed: (){
+                            context.go('/invoice/create_new_invoice');
+                          },
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          spacing: 15,
+                          children: [
+                            ShadDatePicker.range(
+                              placeholder: Text('Start - End Date',
+                                  style: textTheme.small
+                                      .copyWith(fontSize: kWidgetFontSize)),
+                              closeOnSelection: true,
+                              hideWeekdayNames: true,
                             ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'TZS 203,155,168.65',
-                            style: textTheme.small
-                                .copyWith(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 250),
-                            child: const ShadInput(
-                              placeholder: Text('Search'),
-                              prefix: Icon(
-                                LucideIcons.search,
-                                size: 15,
+                            ShadButton.outline(
+                              child: Text(
+                                'Fetch Data',
+                                style: textTheme.small
+                                    .copyWith(fontSize: kWidgetFontSize),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'TZS 203,155,168.65',
+                              style: textTheme.small
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 250),
+                              child: const ShadInput(
+                                placeholder: Text('Search'),
+                                prefix: Icon(
+                                  LucideIcons.search,
+                                  size: 15,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  InvoiceListDataTable(invoices: invoices,),
-                ],
+                          ],
+                        )
+                      ],
+                    ),
+                    InvoiceListDataTable(invoices: invoices,),
+                  ],
+                ),
               ),
             )
           ],
