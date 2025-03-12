@@ -40,10 +40,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   shadcn_ui: ^0.17.1
-  riverpod: ^2.6.1
+  flutter_riverpod: ^2.6.1
   go_router: ^14.6.3
   google_fonts: ^6.2.1
   syncfusion_flutter_datagrid: ^28.1.41
+  auto_size_text: ^3.0.0
+  shadcn_flutter: ^0.0.34
 
 dev_dependencies:
   flutter_test:

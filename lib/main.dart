@@ -1,11 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oursales/routes/router.dart';
+import 'package:oursales/ui/state_management/sidemenu/active_side_menu_state.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 void main() {
-  runApp(const OurSales());
+  runApp(const ProviderScope(child: OurSales()));
 }
+
+final activeMenuProvider = ChangeNotifierProvider((ref) => SideMenuProvider());
+final sideMenuExpandedProvider = ChangeNotifierProvider((ref) => SideMenuProvider());
 
 class OurSales extends StatefulWidget {
   const OurSales({super.key});
@@ -15,63 +20,34 @@ class OurSales extends StatefulWidget {
 }
 
 class _OurSalesState extends State<OurSales> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ShadApp.materialRouter(
-      routerConfig: AppRoutes().router,
+
+    return ShadcnApp.router(
+      routerConfig: AppRoutes.router,
       title: 'oursales',
-      theme: ShadThemeData(
-        disableSecondaryBorder: true,
-          colorScheme: ShadZincColorScheme.light(), brightness: Brightness.light,
-          textTheme: ShadTextTheme.fromGoogleFont(
-            GoogleFonts.openSans,
 
-          ),
-        primaryButtonTheme: ShadButtonTheme(
-          gradient: LinearGradient(
-            colors: [Colors.teal, Colors.redAccent],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-        )
-      ),
-      darkTheme: ShadThemeData(
-        disableSecondaryBorder: true,
-        breakpoints: ShadBreakpoints(
-          tn: 0, // tiny
-          sm: 640, // small
-          md: 768, // medium
-          lg: 1024, // large
-          xl: 1280, // extra large
-          xxl: 1536, // extra extra large
+      theme: ThemeData(
+        colorScheme: ColorSchemes.lightRose(),
+        radius: 0.5,
+        typography: Typography.geist().copyWith(
+          xSmall: GoogleFonts.openSans(fontSize: 12),
+          small: GoogleFonts.openSans(fontSize: 15),
+          base: GoogleFonts.openSans(),
         ),
-        brightness: Brightness.dark,
-        textTheme: ShadTextTheme.fromGoogleFont(
-          GoogleFonts.openSans,
         ),
-        colorScheme: const ShadSlateColorScheme.dark(
-          background: Colors.black,
-        ),
-        primaryButtonTheme: const ShadButtonTheme(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.cyan],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          // backgroundColor: Colors.cyan,
+      darkTheme: ThemeData(
+        colorScheme: ColorSchemes.darkRose(),
+        radius: 0.5,
+        typography: Typography.geist().copyWith(
+          xSmall: GoogleFonts.openSans(fontSize: 12),
+          small: GoogleFonts.openSans(fontSize: 15),
+          base: GoogleFonts.openSans(),
         ),
 
       ),
-
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
-
-
-
-
-

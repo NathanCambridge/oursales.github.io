@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oursales/ui/tables/invoice_list_table/invoice_list_data_table.dart';
-import 'package:oursales/util/widget_constants.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter/material.dart';
+import 'package:oursales/ui/components/sidemenu/shad_side_menu.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 import '../../components/sidemenu/sidemenu.dart';
-import '../../tables/invoice_list_table/data_table_source.dart';
+import '../../tables/invoice/invoice_list_table/invoice_list_data_table.dart';
 
 class InvoiceListPage extends StatefulWidget {
   const InvoiceListPage({super.key});
@@ -15,111 +14,98 @@ class InvoiceListPage extends StatefulWidget {
 }
 
 class _InvoiceListPageState extends State<InvoiceListPage> {
-  final popoverController = ShadPopoverController();
-  final menuController = ShadPopoverController();
 
-
-  @override
-  void dispose() {
-    popoverController.dispose();
-    super.dispose();
-  }
+  shadcn.DateTimeRange? _value;
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = ShadTheme
-        .of(context)
-        .textTheme;
-    final colorTheme = ShadTheme
-        .of(context)
-        .colorScheme;
-    final screenWidth = MediaQuery.sizeOf(context);
+
     return Scaffold(
+      backgroundColor: shadcn.Theme.of(context).colorScheme.background,
       body: Padding(
-        padding: const EdgeInsets.only(
-          right: 20,
-        ),
-        child: Row(
-          children: [
-            SideMenu(),
-            Expanded(
-              flex: 6,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  spacing: 15,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ShadButton(
-                          child: Text(
-                            'New Invoice',
-                            style: textTheme.small.copyWith(
-                                fontSize: kWidgetFontSize,
-                                color: colorTheme.primaryForeground),
+          padding: const EdgeInsets.only(
+            right: 20,
+          ),
+          child: Row(
+            children: [
+              ExpandedSideBar(),
+              Expanded(
+                flex: 6,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    spacing: 15,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          shadcn.PrimaryButton(
+                            leading: Icon(shadcn.LucideIcons.plus, size: 16,),
+                            onPressed: (){
+                              context.go('/invoice/create_new_invoice');
+                            },
+                            child: Text(
+                              'Create Invoice',
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            spacing: 25,
+                            children: [
+                              shadcn.DateRangePicker(
+                                value: _value,
+                                mode: shadcn.PromptMode.popover,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _value = value;
+                                  });
+                                },
+                              ),
+                              const shadcn.Gap(16),
+                             shadcn.OutlineButton(
+                                onPressed: () {  },
+                                child: Text(
+                                  'Fetch Data',
+                                ).small(),
+                              )
+                            ],
                           ),
-                          onPressed: (){
-                            context.go('/invoice/create_new_invoice');
-                          },
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          spacing: 15,
-                          children: [
-                            ShadDatePicker.range(
-                              placeholder: Text('Start - End Date',
-                                  style: textTheme.small
-                                      .copyWith(fontSize: kWidgetFontSize)),
-                              closeOnSelection: true,
-                              hideWeekdayNames: true,
-                            ),
-                            ShadButton.outline(
-                              child: Text(
-                                'Fetch Data',
-                                style: textTheme.small
-                                    .copyWith(fontSize: kWidgetFontSize),
+                          Row(
+                            children: [
+                              shadcn.Text(
+                                'TZS 203,155,168.65',
+                              ).small().bold(),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(maxWidth: 250),
+                                child:  shadcn.TextField(
+                                  placeholder: shadcn.Text('Search').small(),
+                                  trailing:   Icon(
+                                    shadcn.LucideIcons.search,
+                                    size: 15,
+                                  ),
+                                )
                               ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'TZS 203,155,168.65',
-                              style: textTheme.small
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 250),
-                              child: const ShadInput(
-                                placeholder: Text('Search'),
-                                prefix: Icon(
-                                  LucideIcons.search,
-                                  size: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    InvoiceListDataTable(invoices: invoices,),
-                  ],
+                              SizedBox(width: 10)
+                            ],
+                          )
+                        ],
+                      ),
+                      InvoiceListDataTable(invoices: invoices,),
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
-      ),
     );
   }
 }
@@ -145,7 +131,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Sarah Kilonzo',
     'Amount': '2,050,700',
     'vehicle': 'T 234 BCD',
-    'status': 'delivered',
+    'status': 'on delivery',
   },
   {
     'date': '10.01.2025',
@@ -155,7 +141,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'David Kimaro',
     'Amount': '800,400',
     'vehicle': 'T 345 CDE',
-    'status': 'pending',
+    'status': 'supplied',
   },
   {
     'date': '15.01.2025',
@@ -165,7 +151,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Paul Sanga',
     'Amount': '3,500,000',
     'vehicle': 'T 456 DEF',
-    'status': 'delivered',
+    'status': 'on delivery',
   },
   {
     'date': '20.01.2025',
@@ -175,7 +161,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Jessica Mwalimu',
     'Amount': '950,600',
     'vehicle': 'T 567 EFG',
-    'status': 'paid',
+    'status': 'invoiced',
   },
   {
     'date': '25.01.2025',
@@ -185,7 +171,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Daniel Mushi',
     'Amount': '1,750,900',
     'vehicle': 'T 678 FGH',
-    'status': 'pending',
+    'status': 'invoiced',
   },
   {
     'date': '30.01.2025',
@@ -205,7 +191,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Francis Mwenda',
     'Amount': '1,630,300',
     'vehicle': 'T 890 HIJ',
-    'status': 'paid',
+    'status': 'supplied',
   },
   {
     'date': '07.02.2025',
@@ -215,7 +201,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'John Omari',
     'Amount': '780,200',
     'vehicle': 'T 901 IJK',
-    'status': 'pending',
+    'status': 'invoiced',
   },
   {
     'date': '12.02.2025',
@@ -235,7 +221,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Sarah Kilonzo',
     'Amount': '1,500,000',
     'vehicle': 'T 123 KLM',
-    'status': 'paid',
+    'status': 'on delivery',
   },
   {
     'date': '22.02.2025',
@@ -245,7 +231,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'David Kimaro',
     'Amount': '2,900,750',
     'vehicle': 'T 234 LMN',
-    'status': 'pending',
+    'status': 'on delivery',
   },
   {
     'date': '27.02.2025',
@@ -265,7 +251,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Paul Sanga',
     'Amount': '3,650,800',
     'vehicle': 'T 456 NOP',
-    'status': 'paid',
+    'status': 'invoiced',
   },
   {
     'date': '10.03.2025',
@@ -275,7 +261,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Francis Mwenda',
     'Amount': '850,900',
     'vehicle': 'T 567 OPQ',
-    'status': 'pending',
+    'status': 'supplied',
   },
   {
     'date': '15.03.2025',
@@ -295,7 +281,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Elizabeth Ngugi',
     'Amount': '1,780,500',
     'vehicle': 'T 789 QRS',
-    'status': 'paid',
+    'status': 'invoiced',
   },
   {
     'date': '25.03.2025',
@@ -305,7 +291,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Angela Kiptoo',
     'Amount': '2,950,600',
     'vehicle': 'T 890 RST',
-    'status': 'pending',
+    'status': 'invoiced',
   },
   {
     'date': '30.03.2025',
@@ -325,7 +311,27 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Paul Sanga',
     'Amount': '1,300,700',
     'vehicle': 'T 012 TUV',
-    'status': 'paid',
+    'status': 'supplied',
+  },
+  {
+    'date': '05.04.2025',
+    'invoice': 'LS/1020/2025',
+    'CustomerCode': 'C11890',
+    'CustomerName': 'Mason White',
+    'Salesman': 'Paul Sanga',
+    'Amount': '1,300,700',
+    'vehicle': 'T 012 TUV',
+    'status': 'supplied',
+  },
+  {
+    'date': '05.04.2025',
+    'invoice': 'LS/1020/2025',
+    'CustomerCode': 'C11890',
+    'CustomerName': 'Mason White',
+    'Salesman': 'Paul Sanga',
+    'Amount': '1,300,700',
+    'vehicle': 'T 012 TUV',
+    'status': 'supplied',
   },
 ];
 
