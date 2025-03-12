@@ -64,10 +64,10 @@ class _SideMenuState extends State<SideMenu> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CollapsedSideMenu(menuDetails: [
-              (icon: LucideIcons.chartBar, path: '/'),
-              (icon: LucideIcons.airplay, path: '/invoice'),
-              (icon: LucideIcons.listCheck, path: '/order'),
-              (icon: LucideIcons.alarmClock, path: '/inventory')
+              (icon: LucideIcons.chartBar, path: '/', labelName: 'Dashboard'),
+              (icon: LucideIcons.airplay, path: '/invoice', labelName: 'Invoice'),
+              (icon: LucideIcons.listCheck, path: '/order', labelName: 'Order'),
+              (icon: LucideIcons.alarmClock, path: '/inventory', labelName: 'Inventory')
             ]),
             ShadButton.outline(
               icon: Icon(LucideIcons.chevronRight, size: 15),

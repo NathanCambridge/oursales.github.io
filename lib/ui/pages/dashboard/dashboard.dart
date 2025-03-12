@@ -27,7 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
         padding: const EdgeInsets.only( right: 20),
         child: Row(
           children: [
-            SideMenu(),
+            ExpandableSidebarExample1,
             Expanded(
               flex: 6,
               child: Container(

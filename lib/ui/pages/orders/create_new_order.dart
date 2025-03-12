@@ -3,19 +3,19 @@ import 'package:oursales/ui/components/input_with_search/customer_input_with_sea
 import 'package:oursales/ui/components/input_with_search/invoice_base_price.dart';
 import 'package:oursales/ui/components/input_with_search/invoice_products.dart';
 import 'package:oursales/ui/components/input_with_search/invoice_sales_person.dart';
+import 'package:oursales/ui/tables/orders/new_order_table/new_order_data_table.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../components/sidemenu/sidemenu.dart';
-import '../../tables/invoice/new_invoice_table/new_invoice_data_table.dart';
 
-class CreateNewInvoice extends StatefulWidget {
-  const CreateNewInvoice({super.key});
+class CreateNewOrder extends StatefulWidget {
+  const CreateNewOrder({super.key});
 
   @override
-  State<CreateNewInvoice> createState() => _CreateNewInvoiceState();
+  State<CreateNewOrder> createState() => _CreateNewOrderState();
 }
 
-class _CreateNewInvoiceState extends State<CreateNewInvoice> {
+class _CreateNewOrderState extends State<CreateNewOrder> {
   @override
   Widget build(BuildContext context) {
     final textTheme = ShadTheme.of(context).textTheme;
@@ -39,7 +39,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                     padding: EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        Text('New Invoice', style: textTheme.h1.copyWith(fontSize: 18))
+                        Text('New Order', style: textTheme.h1.copyWith(fontSize: 18))
                       ],
                     ),
                   ),
@@ -84,7 +84,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   ],),
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.40,
-                      child: NewInvoiceDataTable(invoiceItems: invoiceItems)),
+                      child: NewOrderDataTable(orderItems: orderItems)),
                   Row(
                     spacing: 15,
                     children: [
@@ -155,7 +155,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                    ShadButton(child: Text('Verify Promo'),)
+                    ShadButton(child: Text('Save Order'),)
                   ],)
                 ],
               ),
@@ -194,7 +194,7 @@ const products = [
   {'name': 'DYML ORIG CHOCOLATE 12X80G'},
 ];
 
-const List<Map<String, dynamic>> invoiceItems = [
+const List<Map<String, dynamic>> orderItems = [
   {
     'code': 'P0023',
     'product': 'Veve',

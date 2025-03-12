@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oursales/ui/tables/invoice_list_table/invoice_list_data_table.dart';
 import 'package:oursales/util/widget_constants.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../components/sidemenu/sidemenu.dart';
-import '../../tables/invoice_list_table/data_table_source.dart';
+import '../../tables/invoice/invoice_list_table/invoice_list_data_table.dart';
 
 class InvoiceListPage extends StatefulWidget {
   const InvoiceListPage({super.key});
@@ -53,15 +52,16 @@ class _InvoiceListPageState extends State<InvoiceListPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ShadButton(
+                          icon: Icon(LucideIcons.plus, size: 16,),
+                          onPressed: (){
+                            context.go('/invoice/create_new_invoice');
+                          },
                           child: Text(
-                            'New Invoice',
+                            'Create Invoice',
                             style: textTheme.small.copyWith(
                                 fontSize: kWidgetFontSize,
                                 color: colorTheme.primaryForeground),
                           ),
-                          onPressed: (){
-                            context.go('/invoice/create_new_invoice');
-                          },
                         )
                       ],
                     ),
@@ -69,10 +69,10 @@ class _InvoiceListPageState extends State<InvoiceListPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          spacing: 15,
+                          spacing: 25,
                           children: [
                             ShadDatePicker.range(
-                              placeholder: Text('Start - End Date',
+                              placeholder: Text('Start  -  End Date',
                                   style: textTheme.small
                                       .copyWith(fontSize: kWidgetFontSize)),
                               closeOnSelection: true,
@@ -91,8 +91,8 @@ class _InvoiceListPageState extends State<InvoiceListPage> {
                           children: [
                             Text(
                               'TZS 203,155,168.65',
-                              style: textTheme.small
-                                  .copyWith(fontWeight: FontWeight.bold),
+                              style: textTheme.h1Large
+                                  .copyWith(fontSize: 25),
                             )
                           ],
                         ),
@@ -145,7 +145,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Sarah Kilonzo',
     'Amount': '2,050,700',
     'vehicle': 'T 234 BCD',
-    'status': 'delivered',
+    'status': 'on delivery',
   },
   {
     'date': '10.01.2025',
@@ -155,7 +155,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'David Kimaro',
     'Amount': '800,400',
     'vehicle': 'T 345 CDE',
-    'status': 'pending',
+    'status': 'supplied',
   },
   {
     'date': '15.01.2025',
@@ -165,7 +165,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Paul Sanga',
     'Amount': '3,500,000',
     'vehicle': 'T 456 DEF',
-    'status': 'delivered',
+    'status': 'on delivery',
   },
   {
     'date': '20.01.2025',
@@ -175,7 +175,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Jessica Mwalimu',
     'Amount': '950,600',
     'vehicle': 'T 567 EFG',
-    'status': 'paid',
+    'status': 'invoiced',
   },
   {
     'date': '25.01.2025',
@@ -185,7 +185,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Daniel Mushi',
     'Amount': '1,750,900',
     'vehicle': 'T 678 FGH',
-    'status': 'pending',
+    'status': 'invoiced',
   },
   {
     'date': '30.01.2025',
@@ -205,7 +205,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Francis Mwenda',
     'Amount': '1,630,300',
     'vehicle': 'T 890 HIJ',
-    'status': 'paid',
+    'status': 'supplied',
   },
   {
     'date': '07.02.2025',
@@ -215,7 +215,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'John Omari',
     'Amount': '780,200',
     'vehicle': 'T 901 IJK',
-    'status': 'pending',
+    'status': 'invoiced',
   },
   {
     'date': '12.02.2025',
@@ -235,7 +235,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Sarah Kilonzo',
     'Amount': '1,500,000',
     'vehicle': 'T 123 KLM',
-    'status': 'paid',
+    'status': 'on delivery',
   },
   {
     'date': '22.02.2025',
@@ -245,7 +245,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'David Kimaro',
     'Amount': '2,900,750',
     'vehicle': 'T 234 LMN',
-    'status': 'pending',
+    'status': 'on delivery',
   },
   {
     'date': '27.02.2025',
@@ -265,7 +265,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Paul Sanga',
     'Amount': '3,650,800',
     'vehicle': 'T 456 NOP',
-    'status': 'paid',
+    'status': 'invoiced',
   },
   {
     'date': '10.03.2025',
@@ -275,7 +275,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Francis Mwenda',
     'Amount': '850,900',
     'vehicle': 'T 567 OPQ',
-    'status': 'pending',
+    'status': 'supplied',
   },
   {
     'date': '15.03.2025',
@@ -295,7 +295,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Elizabeth Ngugi',
     'Amount': '1,780,500',
     'vehicle': 'T 789 QRS',
-    'status': 'paid',
+    'status': 'invoiced',
   },
   {
     'date': '25.03.2025',
@@ -305,7 +305,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Angela Kiptoo',
     'Amount': '2,950,600',
     'vehicle': 'T 890 RST',
-    'status': 'pending',
+    'status': 'invoiced',
   },
   {
     'date': '30.03.2025',
@@ -325,7 +325,7 @@ final List<Map<String, dynamic>> invoices = [
     'Salesman': 'Paul Sanga',
     'Amount': '1,300,700',
     'vehicle': 'T 012 TUV',
-    'status': 'paid',
+    'status': 'supplied',
   },
 ];
 

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import '../../../util/widget_constants.dart';
 
-class NewInvoiceDataSource extends DataTableSource {
-  late final List<Map<String, dynamic>> invoiceItems;
+import '../../../../util/widget_constants.dart';
+
+class OrderDetailsDataSource extends DataTableSource {
+  late final List<Map<String, dynamic>> selectedOrder;
   late BuildContext context;
 
-  NewInvoiceDataSource({required this.invoiceItems, required this.context});
+  OrderDetailsDataSource({required this.selectedOrder, required this.context});
 
   @override
   DataRow getRow(int index) {
-    final items = invoiceItems[index];
+    final invoiceDetails = selectedOrder[index];
     final colorTheme = ShadTheme.of(context).colorScheme;
     final textTheme = ShadTheme.of(context).textTheme;
 
@@ -26,7 +27,7 @@ class NewInvoiceDataSource extends DataTableSource {
 
           },
         ),
-        cells: items.values.map((value) {
+        cells: invoiceDetails.values.map((value) {
           return DataCell(
             value == "invoiced"? Icon(LucideIcons.truck, weight: 0.1, color: Colors.blueAccent,) : value == "delivered"? Icon(LucideIcons.check, color: Colors.green,) : Text(
               value.toString(),
@@ -36,7 +37,7 @@ class NewInvoiceDataSource extends DataTableSource {
           );
         }).toList(),
         onSelectChanged: (change) {
-          // context.go('/invoice/invoice_details');
+          context.go('/invoice/invoice_details');
         });
   }
 
@@ -44,7 +45,7 @@ class NewInvoiceDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => invoiceItems.length;
+  int get rowCount => selectedOrder.length;
 
   @override
   int get selectedRowCount => 0;

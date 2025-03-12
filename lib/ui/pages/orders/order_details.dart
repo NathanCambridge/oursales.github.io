@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:oursales/ui/pages/orders/order_list.dart';
 import 'package:oursales/util/widget_constants.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../tables/invoice/invoice_details_table/invoice_details_data_table.dart';
+import '../../tables/orders/order_details_table/order_details_data_table.dart';
 
-class InvoiceDetails extends StatelessWidget {
-  const InvoiceDetails({super.key});
+class OrderDetails extends StatelessWidget {
+  const OrderDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class InvoiceDetails extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8),
           child: Align(
             alignment: Alignment.centerLeft,
-              child: Text('Invoice Details', style: textTheme.h1Large.copyWith(fontSize: 30, color: colorScheme.primary, fontWeight: FontWeight.bold ),)),
+              child: Text('Orders Details', style: textTheme.h1Large.copyWith(fontSize: 30, color: colorScheme.primary, fontWeight: FontWeight.bold ),)),
         ),
         leadingWidth: double.infinity,
         automaticallyImplyLeading: false,
@@ -31,16 +32,17 @@ class InvoiceDetails extends StatelessWidget {
             Row(
               spacing: 10,
               children: [
-
+                ShadButton(icon: Icon(LucideIcons.circleCheck, size: 15,), height: 30, child: Text('Approve' ,),),
+                ShadButton(icon: Icon(LucideIcons.hand, size: 15,), height: 30, child: Text('Hold' ,),),
                 ShadButton(icon: Icon(LucideIcons.filePenLine, size: 15,), height: 30, child: Text('Edit' ,),),
-                ShadButton(icon: Icon(LucideIcons.printer, size: 15,), height: 30, child: Text('Print' ,),),
+                ShadButton(icon: Icon(LucideIcons.printer, size: 15,), height: 30, child: Text('Proforma Invoice' ,),),
               ],
             )
           ],),
           SizedBox(width: 10,)
       ],),
       body: Padding(
-        padding: const EdgeInsets.only(top: 8, bottom: 15, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 8, bottom: 15, left: 12, right: 12),
         child: SingleChildScrollView(
           child: Column(
             spacing: 5,
@@ -54,7 +56,7 @@ class InvoiceDetails extends StatelessWidget {
                   spacing: 5,
                   children: [
                     Text('Invoice:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                    Text('LS/200/2024'),
+                    Text('1021ABC'),
                   ],
                 )
               ],),
@@ -128,7 +130,7 @@ class InvoiceDetails extends StatelessWidget {
               ),
           
               //Loading invoice details table
-              InvoiceDetailsDataTable(selectedInvoice: invoice),
+              OrderDetailsDataTable(selectedOrder: orders),
 
               //Remark Row Details
               Row(

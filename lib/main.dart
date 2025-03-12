@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oursales/routes/router.dart';
+import 'package:oursales/ui/state_management/sidemenu/active_side_menu_state.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 void main() {
-  runApp(const OurSales());
+  runApp( const ProviderScope(child:  OurSales()));
 }
+
+final activeMenuProvider = ChangeNotifierProvider((ref) => SideMenuProvider());
 
 class OurSales extends StatefulWidget {
   const OurSales({super.key});
