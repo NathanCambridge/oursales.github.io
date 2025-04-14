@@ -1,62 +1,72 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:oursales/main.dart';
 import 'package:oursales/ui/components/sidemenu/shad_side_menu.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
+import '../../../util/widget_constants.dart';
 import '../../components/sidemenu/sidemenu.dart';
 import '../../tables/invoice/invoice_list_table/invoice_list_data_table.dart';
 
-class InvoiceListPage extends StatefulWidget {
+class InvoiceListPage extends ConsumerStatefulWidget {
   const InvoiceListPage({super.key});
 
   @override
-  State<InvoiceListPage> createState() => _InvoiceListPageState();
+  ConsumerState<InvoiceListPage> createState() => _InvoiceListPageState();
 }
 
-class _InvoiceListPageState extends State<InvoiceListPage> {
-
+class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
   shadcn.DateTimeRange? _value;
+  TextEditingController searchController = TextEditingController();
+  List<Map<String, dynamic>> filteredInvoices = [];
+  String searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.watch(invoiceProvider).getLatestInvoices(invoices);
+    });
+    // Show all by default
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: shadcn.Theme.of(context).colorScheme.background,
       body: Padding(
-          padding: const EdgeInsets.only(
-            right: 20,
-          ),
-          child: Row(
-            children: [
-              ExpandedSideBar(),
-              Expanded(
-                flex: 6,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    spacing: 15,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          shadcn.PrimaryButton(
-                            leading: Icon(shadcn.LucideIcons.plus, size: 16,),
-                            onPressed: (){
-                              context.go('/invoice/create_new_invoice');
-                            },
-                            child: Text(
-                              'Create Invoice',
-                            ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            spacing: 25,
-                            children: [
-                              shadcn.DateRangePicker(
+        padding: const EdgeInsets.only(
+          right: 20,
+        ),
+        child: Row(
+          children: [
+            ExpandedSideBar(),
+            Expanded(
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  spacing: 15,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        shadcn.PrimaryButton(
+                          onPressed: () {},
+                          child: const Text('Create Invoice').xSmall(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          spacing: 25,
+                          children: [
+                            shadcn.DefaultTextStyle(
+                              style: kDefaultFont(context),
+                              child: shadcn.DateRangePicker(
                                 value: _value,
                                 mode: shadcn.PromptMode.popover,
                                 onChanged: (value) {
@@ -65,52 +75,85 @@ class _InvoiceListPageState extends State<InvoiceListPage> {
                                   });
                                 },
                               ),
-                              const shadcn.Gap(16),
-                             shadcn.OutlineButton(
-                                onPressed: () {  },
-                                child: Text(
-                                  'Fetch Data',
-                                ).small(),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              shadcn.Text(
-                                'TZS 203,155,168.65',
-                              ).small().bold(),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              ConstrainedBox(
+                            ),
+                            const shadcn.Gap(16),
+                            shadcn.OutlineButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Fetch Data',
+                              ).xSmall(),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            shadcn.Text(
+                              'TZS 203,155,168.65',
+                              style: kHeaderDefaultFont(context),
+                            ).small().bold(),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            ConstrainedBox(
                                 constraints: const BoxConstraints(maxWidth: 250),
-                                child:  shadcn.TextField(
-                                  placeholder: shadcn.Text('Search').small(),
-                                  trailing:   Icon(
+                                child: shadcn.TextField(
+                                  controller: searchController,
+                                  onChanged: (value) {
+                                      filteredInvoices = updateSearch(value);
+                                      ref.watch(invoiceProvider).getLatestInvoices(filteredInvoices);
+                                  },
+                                  placeholder: shadcn.Text('Search').xSmall(),
+                                  trailing: Icon(
                                     shadcn.LucideIcons.search,
                                     size: 15,
                                   ),
-                                )
-                              ),
-                              SizedBox(width: 10)
-                            ],
-                          )
-                        ],
+                                )),
+                            SizedBox(width: 10)
+                          ],
+                        )
+                      ],
+                    ),
+                    if (ref.watch(invoiceProvider).invoices!.isEmpty)
+                      Padding(
+                        padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * .25),
+                        child: Center(
+                            child: Text(
+                          'No invoice Found',
+                          style: kHeaderDefaultFont(context),
+                        )),
+                      )
+                    else
+                      // The paginated data table to display invoices
+                      InvoiceListDataTable(
                       ),
-                      InvoiceListDataTable(invoices: invoices,),
-                    ],
-                  ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
+      ),
     );
   }
+
+  List<Map<String, dynamic>> updateSearch(String query) {
+    List<Map<String, dynamic>> newList = [];
+
+    setState(() {
+      searchQuery = query.toLowerCase().replaceAll(RegExp(r'\s+'), '');
+
+      newList = invoices.where((invoice) {
+        return invoice.values.any((value) {
+          final stringValue = value.toString().toLowerCase().replaceAll(RegExp(r'\s+'), '');
+          return stringValue.contains(searchQuery);
+        });
+      }).toList();
+    });
+
+    return newList;
+  }
 }
-
-
 
 final List<Map<String, dynamic>> invoices = [
   {
@@ -334,5 +377,3 @@ final List<Map<String, dynamic>> invoices = [
     'status': 'supplied',
   },
 ];
-
-

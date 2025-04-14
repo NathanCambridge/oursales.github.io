@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oursales/routes/router.dart';
+import 'package:oursales/ui/state_management/invoice/invoice_list_state.dart';
 import 'package:oursales/ui/state_management/sidemenu/active_side_menu_state.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -11,6 +12,7 @@ void main() {
 
 final activeMenuProvider = ChangeNotifierProvider((ref) => SideMenuProvider());
 final sideMenuExpandedProvider = ChangeNotifierProvider((ref) => SideMenuProvider());
+final invoiceProvider = ChangeNotifierProvider((ref) => InvoiceProvider());
 
 class OurSales extends StatefulWidget {
   const OurSales({super.key});
@@ -31,18 +33,18 @@ class _OurSalesState extends State<OurSales> {
         colorScheme: ColorSchemes.lightRose(),
         radius: 0.5,
         typography: Typography.geist().copyWith(
-          xSmall: GoogleFonts.openSans(fontSize: 12),
-          small: GoogleFonts.openSans(fontSize: 15),
-          base: GoogleFonts.openSans(),
+          xSmall: GoogleFonts.roboto(fontSize: 13, fontWeight: FontWeight.w400),
+          small: GoogleFonts.roboto(fontSize: 13, fontWeight: FontWeight.w400),
+          base: GoogleFonts.roboto(),
         ),
         ),
       darkTheme: ThemeData(
         colorScheme: ColorSchemes.darkRose(),
         radius: 0.5,
         typography: Typography.geist().copyWith(
-          xSmall: GoogleFonts.openSans(fontSize: 12),
-          small: GoogleFonts.openSans(fontSize: 15),
-          base: GoogleFonts.openSans(),
+          xSmall: GoogleFonts.roboto(fontSize: 13, fontWeight: FontWeight.w400),
+          small: GoogleFonts.roboto(fontSize: 13, fontWeight: FontWeight.w400),
+          base: GoogleFonts.roboto(),
         ),
 
       ),

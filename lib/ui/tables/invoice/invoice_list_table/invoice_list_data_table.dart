@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oursales/main.dart';
 import 'package:oursales/ui/pages/invoices/invoice_list.dart';
 import '../../../../util/widget_constants.dart';
 import 'data_table_source.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
-class InvoiceListDataTable extends StatefulWidget {
-  const InvoiceListDataTable({super.key, required this.invoices});
-
-
-  final List<Map<String, dynamic>> invoices;
+class InvoiceListDataTable extends ConsumerStatefulWidget {
+  const InvoiceListDataTable({super.key});
 
   @override
-  State<InvoiceListDataTable> createState() => _InvoiceListDataTableState();
+  ConsumerState<InvoiceListDataTable> createState() => _InvoiceListDataTableState();
 }
 
-class _InvoiceListDataTableState extends State<InvoiceListDataTable> {
+class _InvoiceListDataTableState extends ConsumerState<InvoiceListDataTable> {
 
   bool _isAscending = true; // Track sorting order
   int _sortColumnIndex = 0; // Track the current sorted column index
@@ -42,23 +40,31 @@ class _InvoiceListDataTableState extends State<InvoiceListDataTable> {
                 // will affect only for table footer background.
                 cardTheme:  CardTheme(color: shadcn.Theme.of(context).colorScheme.background,
                 ),
+                textTheme: Theme.of(context).textTheme.copyWith(
+                  bodySmall: TextStyle( // Typically used for footer text
+                    color: shadcn.Theme.of(context).colorScheme.cardForeground,// Optional: Adjust font size
+                  ),
+                ),
+                iconTheme: IconThemeData(
+                  color: shadcn.Theme.of(context).colorScheme.cardForeground // Change footer icon color
+                ),
               ),
               child: PaginatedDataTable(
                 headingRowColor:   WidgetStateColor.resolveWith((states) => shadcn.Theme.of(context).colorScheme.background),
                 showCheckboxColumn: false,
-                columns: invoices.first.keys.map((key) {
+                columns: ref.watch(invoiceProvider).invoices!.first.keys.map((key) {
                   return DataColumn(label: Row(
                     spacing: 10,
                     children: [
-                      shadcn.Text(key),
-                      Icon(shadcn.LucideIcons.arrowUpDown, size: kWidgetFontSize,)
+                      shadcn.Text(key, style: kDefaultFont(context),),
+                      Icon(shadcn.LucideIcons.arrowUpDown, size: kWidgetFontSize, color: shadcn.Theme.of(context).colorScheme.cardForeground,)
                     ],
                   ), numeric: key=='Amount'? true : false,
                     onSort:  (columnIndex, ascending) => _sort((invoices) => invoices[key], columnIndex, _isAscending),
                   );
                 }).toList(),
-                source: InvoiceDataSource(invoices, context),
-                rowsPerPage: invoices.length > 19 ? 20 : invoices.length,
+                source: InvoiceDataSource(ref.watch(invoiceProvider).invoices!, context),
+                rowsPerPage: ref.watch(invoiceProvider).invoices!.length > 19 ? 20 : invoices.length,
                 showEmptyRows: false,
               ),
             ),

@@ -28,7 +28,7 @@ class OrderDataSource extends DataTableSource {
         ),
         cells: invoice.values.map((value) {
           return DataCell(
-            value == "invoiced"? Icon(LucideIcons.checkCheck, color: Colors.purpleAccent,) : value == "on delivery"? Icon(LucideIcons.truck, color: Colors.orange,): value == "supplied"? Icon(LucideIcons.clipboardCheck, color: Colors.greenAccent,) : Text(
+            value == "invoiced"? Icon(LucideIcons.truck, weight: 0.1, color: Colors.blueAccent,) : value == "delivered"? Icon(LucideIcons.check, color: Colors.green,) : Text(
               value.toString(),
               style: textTheme.small.copyWith(
                   fontSize: kWidgetFontSize, color: colorTheme.foreground),

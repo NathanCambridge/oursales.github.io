@@ -47,9 +47,8 @@ class _ExpandedSideBarState extends ConsumerState<ExpandedSideBar> {
             onSelected: (value) {
               setState(() {
                 selected = value;
-                print(sideBarItems[value]['route']);
-                context.go('/invoice');
               });
+              context.go(sideBarItems[value][sideBarItems[value].keys.first]['route']);
             },
             children: [
               NavigationButton(
@@ -62,16 +61,11 @@ class _ExpandedSideBarState extends ConsumerState<ExpandedSideBar> {
                 },
                 child: Icon(Icons.menu),
               ),
-              NavigationButton(
-                  alignment: Alignment.centerLeft,
-                  label: Text('Dashboard'),
-                onPressed: (){
-                  context.go('/');
-                },
-                  child: Icon(Icons.router)),
+              NavigationDivider(),
+              buildButton(sideBarItems[0]['dashboard']['name'], sideBarItems[0]['dashboard']['icon']),
               NavigationDivider(),
               buildLabel('Invoice'),
-              buildButton(sideBarItems[0]['invoice']['name'], BootstrapIcons.listCheck),
+              buildButton(sideBarItems[1]['invoice']['name'], sideBarItems[1]['invoice']['icon']),
               buildButton('Sales Order', BootstrapIcons.clipboard2Data),
               buildButton('Credit Note', BootstrapIcons.journalX),
               NavigationDivider(),
@@ -106,4 +100,6 @@ class _ExpandedSideBarState extends ConsumerState<ExpandedSideBar> {
 }
 
 
-List<Map<String, dynamic>> sideBarItems = [{'invoice':{'name':'Sales Invoices', 'icon':BootstrapIcons.listCheck, 'route': '/invoice'}}];
+List<Map<String, dynamic>> sideBarItems = [
+  {'dashboard':{'name':'Dashboard', 'icon':BootstrapIcons.clipboard2PulseFill, 'route': '/'}},
+  {'invoice':{'name':'Sales Invoices', 'icon':BootstrapIcons.listCheck, 'route': '/invoice'}}];

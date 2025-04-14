@@ -5,9 +5,17 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 const double kWidgetFontSize = 13;
 
-// TextStyle kDefaultFont(BuildContext context) {
-//   return GoogleFonts.openSans(
-//     color: shadcn.Theme.of(context).colorScheme.cardForeground,
-//     fontSize: kWidgetFontSize,
-//   );
-// }
+TextStyle kDefaultFont(BuildContext context) {
+  return GoogleFonts.roboto(
+    color: shadcn.Theme.of(context).colorScheme.cardForeground,
+    fontSize: 13,
+    fontWeight: FontWeight.w400
+  );
+}
+
+TextStyle kHeaderDefaultFont(BuildContext context) {
+  return GoogleFonts.spaceGrotesk(
+    color: shadcn.Theme.of(context).colorScheme.cardForeground,
+    fontSize: 20, fontWeight: FontWeight.w600
+  );
+}

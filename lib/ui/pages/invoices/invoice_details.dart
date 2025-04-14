@@ -140,89 +140,92 @@ class InvoiceDetails extends StatelessWidget {
               ),
 
               // Invoice amount and figures
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width * 0.3,
-                  child: Column(
-                    spacing: 5,
-                    children: [
-                      //Total Quantity
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          color: colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(7)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Text('Total Qty', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                          Text('500')
-                        ],),
-                      ),
-                      //Net Amount
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
+              Padding(
+                padding: const EdgeInsets.only(right: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.3,
+                    child: Column(
+                      spacing: 5,
+                      children: [
+                        //Total Quantity
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
                             color: colorScheme.secondary,
                             borderRadius: BorderRadius.circular(7)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Net Amount:', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('42,500'
-                                '')
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Text('Total Qty', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
+                            Text('500')
                           ],),
-                      ),
-                      //Exempted
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(7)
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Exempted ', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('0.00')
-                          ],),
-                      ),
-                      //VAT
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(7)
+                        //Net Amount
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Net Amount:', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
+                              Text('42,500'
+                                  '')
+                            ],),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('VAT', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('7,500')
-                          ],),
-                      ),
-                      //Grand Total
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(7)
+                        //Exempted
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Exempted ', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
+                              Text('0.00')
+                            ],),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Grand Total', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('50,000')
-                          ],),
-                      ),
-                    ],
-                  ),
-                )
-              ],)
+                        //VAT
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('VAT', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
+                              Text('7,500')
+                            ],),
+                        ),
+                        //Grand Total
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Grand Total', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
+                              Text('50,000')
+                            ],),
+                        ),
+                      ],
+                    ),
+                  )
+                ],),
+              )
           ],),
         ),
       ),
