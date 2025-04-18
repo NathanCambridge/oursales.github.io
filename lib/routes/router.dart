@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../ui/pages/dashboard/dashboard.dart';
 import '../ui/pages/inventory/stock_position.dart';
 import '../ui/pages/invoices/create_new_invoice.dart';
@@ -53,16 +52,17 @@ class AppRoutes {
             builder: (context, state) => const StockPosition(),
             routes: [
               GoRoute(
-                path: 'order_details',
+                path: 'current_stock',
                 builder: (context, state) => const OrderDetails(),
               ),
               GoRoute(
-                path: 'create_new_order',
+                path: 'stock_movement',
                 builder: (context, state) => const CreateNewOrder(),
               ),
             ],
           ),
         ],
+
       ),
     ],
   );

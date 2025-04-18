@@ -5,8 +5,10 @@ import 'package:oursales/ui/state_management/invoice_and_order_state/invoice_lis
 import 'package:oursales/ui/state_management/invoice_and_order_state/order_list_state.dart';
 import 'package:oursales/ui/state_management/sidemenu/active_side_menu_state.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 void main() {
+  setUrlStrategy(PathUrlStrategy());
   runApp(const ProviderScope(child: OurSales()));
 }
 
