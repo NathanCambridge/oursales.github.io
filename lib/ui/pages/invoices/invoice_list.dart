@@ -5,8 +5,8 @@ import 'package:oursales/main.dart';
 import 'package:oursales/ui/components/sidemenu/shad_side_menu.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
+import '../../../util/functions/search_function.dart';
 import '../../../util/widget_constants.dart';
-import '../../components/sidemenu/sidemenu.dart';
 import '../../tables/invoice/invoice_list_table/invoice_list_data_table.dart';
 
 class InvoiceListPage extends ConsumerStatefulWidget {
@@ -20,7 +20,7 @@ class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
   shadcn.DateTimeRange? _value;
   TextEditingController searchController = TextEditingController();
   List<Map<String, dynamic>> filteredInvoices = [];
-  String searchQuery = '';
+
 
   @override
   void initState() {
@@ -53,7 +53,9 @@ class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         shadcn.PrimaryButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go('/invoice/create_new_invoice');
+                          },
                           child: const Text('Create Invoice').xSmall(),
                         ),
                       ],
@@ -88,7 +90,7 @@ class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
                         Row(
                           children: [
                             shadcn.Text(
-                              'TZS 203,155,168.65',
+                              'TZS 617,155,168.65',
                               style: kHeaderDefaultFont(context),
                             ).small().bold(),
                           ],
@@ -100,7 +102,10 @@ class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
                                 child: shadcn.TextField(
                                   controller: searchController,
                                   onChanged: (value) {
-                                      filteredInvoices = updateSearch(value);
+                                    setState(() {
+                                      filteredInvoices = updateSearch(value, invoices);
+                                    });
+
                                       ref.watch(invoiceProvider).getLatestInvoices(filteredInvoices);
                                   },
                                   placeholder: shadcn.Text('Search').xSmall(),
@@ -114,7 +119,7 @@ class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
                         )
                       ],
                     ),
-                    if (ref.watch(invoiceProvider).invoices!.isEmpty)
+                    if (ref.watch(invoiceProvider).invoices.isEmpty)
                       Padding(
                         padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * .25),
                         child: Center(
@@ -137,22 +142,6 @@ class _InvoiceListPageState extends ConsumerState<InvoiceListPage> {
     );
   }
 
-  List<Map<String, dynamic>> updateSearch(String query) {
-    List<Map<String, dynamic>> newList = [];
-
-    setState(() {
-      searchQuery = query.toLowerCase().replaceAll(RegExp(r'\s+'), '');
-
-      newList = invoices.where((invoice) {
-        return invoice.values.any((value) {
-          final stringValue = value.toString().toLowerCase().replaceAll(RegExp(r'\s+'), '');
-          return stringValue.contains(searchQuery);
-        });
-      }).toList();
-    });
-
-    return newList;
-  }
 }
 
 final List<Map<String, dynamic>> invoices = [

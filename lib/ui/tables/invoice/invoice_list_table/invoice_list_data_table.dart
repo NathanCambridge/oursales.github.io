@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oursales/main.dart';
 import 'package:oursales/ui/pages/invoices/invoice_list.dart';
+import 'package:oursales/util/functions/capitalize_first_character.dart';
 import '../../../../util/widget_constants.dart';
 import 'data_table_source.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
@@ -56,7 +57,7 @@ class _InvoiceListDataTableState extends ConsumerState<InvoiceListDataTable> {
                   return DataColumn(label: Row(
                     spacing: 10,
                     children: [
-                      shadcn.Text(key, style: kDefaultFont(context),),
+                      shadcn.Text(capitalizeFirstLetter(key), style: kBoldedDefaultFont(context),),
                       Icon(shadcn.LucideIcons.arrowUpDown, size: kWidgetFontSize, color: shadcn.Theme.of(context).colorScheme.cardForeground,)
                     ],
                   ), numeric: key=='Amount'? true : false,
@@ -78,7 +79,7 @@ class _InvoiceListDataTableState extends ConsumerState<InvoiceListDataTable> {
     setState(() {
       _sortColumnIndex = columnIndex;
       _isAscending = !ascending;
-      invoices.sort((a, b) {
+      ref.watch(invoiceProvider).invoices!.sort((a, b) {
         final aValue = getField(a);
         final bValue = getField(b);
         return ascending ? Comparable.compare(aValue, bValue) : Comparable.compare(bValue, aValue);

@@ -22,7 +22,7 @@ class InvoiceDataSource extends DataTableSource {
                   ? colorTheme.destructive
                   : colorTheme.background.withOpacity(0.9); // Even rows
             } else {
-              return states.contains(WidgetState.hovered) ? colorTheme.destructive : colorTheme.card.withOpacity(0.9); // Odd rows
+              return states.contains(WidgetState.hovered) ? colorTheme.destructive : colorTheme.secondary.withOpacity(0.9); // Odd rows
             } // Default color for odd rows
           },
         ),

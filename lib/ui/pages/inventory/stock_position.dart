@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oursales/ui/components/combobox/combo_box.dart';
-import 'package:oursales/ui/components/input_with_search/customer_input_with_search.dart';
-import 'package:oursales/ui/components/input_with_search/invoice_base_price.dart';
-import 'package:oursales/ui/components/input_with_search/invoice_sales_person.dart';
+import 'package:oursales/ui/components/sidemenu/expanded_side_menu.dart';
+import 'package:oursales/ui/components/sidemenu/shad_side_menu.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../util/widget_constants.dart';
@@ -23,7 +22,7 @@ class _StockPositionState extends State<StockPosition> {
     return Scaffold(
       body: Row(
         children: [
-          SideMenu(),
+          ExpandedSideBar(),
           Expanded(
             flex: 6,
             child: Padding(

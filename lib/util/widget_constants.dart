@@ -6,10 +6,18 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 const double kWidgetFontSize = 13;
 
 TextStyle kDefaultFont(BuildContext context) {
-  return GoogleFonts.roboto(
+  return GoogleFonts.inter(
     color: shadcn.Theme.of(context).colorScheme.cardForeground,
     fontSize: 13,
     fontWeight: FontWeight.w400
+  );
+}
+
+TextStyle kBoldedDefaultFont(BuildContext context) {
+  return GoogleFonts.inter(
+      color: shadcn.Theme.of(context).colorScheme.cardForeground,
+      fontSize: 13,
+      fontWeight: FontWeight.w600
   );
 }
 

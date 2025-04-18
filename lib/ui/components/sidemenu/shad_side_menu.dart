@@ -65,8 +65,8 @@ class _ExpandedSideBarState extends ConsumerState<ExpandedSideBar> {
               buildButton(sideBarItems[0]['dashboard']['name'], sideBarItems[0]['dashboard']['icon']),
               NavigationDivider(),
               buildLabel('Invoice'),
-              buildButton(sideBarItems[1]['invoice']['name'], sideBarItems[1]['invoice']['icon']),
-              buildButton('Sales Order', BootstrapIcons.clipboard2Data),
+              buildButton(sideBarItems[1]['sales']['name'], sideBarItems[1]['sales']['icon']),
+              buildButton(sideBarItems[2]['sales']['name'], sideBarItems[2]['sales']['icon']),
               buildButton('Credit Note', BootstrapIcons.journalX),
               NavigationDivider(),
               buildLabel('Inventory'),
@@ -102,4 +102,6 @@ class _ExpandedSideBarState extends ConsumerState<ExpandedSideBar> {
 
 List<Map<String, dynamic>> sideBarItems = [
   {'dashboard':{'name':'Dashboard', 'icon':BootstrapIcons.clipboard2PulseFill, 'route': '/'}},
-  {'invoice':{'name':'Sales Invoices', 'icon':BootstrapIcons.listCheck, 'route': '/invoice'}}];
+  {'sales':{'name':'Sales Invoices', 'icon':BootstrapIcons.listCheck, 'route': '/invoice'}},
+  {'sales':{'name':'Sales Order', 'icon':BootstrapIcons.clipboard2Check, 'route': '/order'}}
+];

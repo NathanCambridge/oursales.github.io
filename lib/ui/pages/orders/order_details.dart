@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oursales/ui/pages/orders/order_list.dart';
 import 'package:oursales/util/widget_constants.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
-
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import '../../tables/orders/order_details_table/order_details_data_table.dart';
 
 class OrderDetails extends StatelessWidget {
@@ -10,15 +8,16 @@ class OrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = ShadTheme.of(context).textTheme;
-    final colorScheme = ShadTheme.of(context).colorScheme;
+    final colorscheme = shadcn.Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: colorscheme.background,
       appBar: AppBar(
+        backgroundColor: colorscheme.background,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Align(
             alignment: Alignment.centerLeft,
-              child: Text('Orders Details', style: textTheme.h1Large.copyWith(fontSize: 30, color: colorScheme.primary, fontWeight: FontWeight.bold ),)),
+              child: Text('Orders Details', style: kHeaderDefaultFont(context))),
         ),
         leadingWidth: double.infinity,
         automaticallyImplyLeading: false,
@@ -32,10 +31,10 @@ class OrderDetails extends StatelessWidget {
             Row(
               spacing: 10,
               children: [
-                ShadButton(icon: Icon(LucideIcons.circleCheck, size: 15,), height: 30, child: Text('Approve' ,),),
-                ShadButton(icon: Icon(LucideIcons.hand, size: 15,), height: 30, child: Text('Hold' ,),),
-                ShadButton(icon: Icon(LucideIcons.filePenLine, size: 15,), height: 30, child: Text('Edit' ,),),
-                ShadButton(icon: Icon(LucideIcons.printer, size: 15,), height: 30, child: Text('Proforma Invoice' ,),),
+                shadcn.PrimaryButton(leading: Icon(shadcn.LucideIcons.circleCheck, size: 15),enabled: true, child: Text('Approve' ,),),
+                shadcn.PrimaryButton(leading: Icon(shadcn.LucideIcons.hand, size: 15,),enabled: true, child: Text('Hold' ,),),
+                shadcn.PrimaryButton(leading: Icon(shadcn.LucideIcons.filePenLine, size: 15,),enabled: true, child: Text('Edit' ,),),
+                shadcn.PrimaryButton(leading: Icon(shadcn.LucideIcons.printer, size: 15,),enabled: true, child: Text('Proforma' ,),),
               ],
             )
           ],),
@@ -51,24 +50,24 @@ class OrderDetails extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('John Simalenga Biyu', style: textTheme.large.copyWith(fontSize: 23),),
+                Text('John Simalenga Biyu', style: kHeaderDefaultFont(context)),
                 Row(
                   spacing: 5,
                   children: [
-                    Text('Invoice:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                    Text('1021ABC'),
+                    Text('Invoice:',style: kBoldedDefaultFont(context)),
+                    Text('1021ABC',style: kDefaultFont(context),),
                   ],
                 )
               ],),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Arusha, Njiro'),
+                  Text('Arusha, Njiro',style: kDefaultFont(context),),
                   Row(
                     spacing: 5,
                     children: [
-                      Text('Date:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                      Text('12-04-2025'),
+                      Text('Date:',style: kBoldedDefaultFont(context)),
+                      Text('12-04-2025',style: kDefaultFont(context),),
                     ],
                   )
                 ],),
@@ -81,22 +80,22 @@ class OrderDetails extends StatelessWidget {
                       Row(
                         spacing: 5,
                         children: [
-                          Text('Sales Person:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                          Text('JOHN SHEMBIOL'),
+                          Text('Sales Person:',style:kBoldedDefaultFont(context)),
+                          Text('JOHN SHEMBIOL',style: kDefaultFont(context),),
                         ],
                       ),
                       Row(
                         spacing: 5,
                         children: [
-                          Text('Creator:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                          Text('SIMON SHINJI'),
+                          Text('Creator:',style: kBoldedDefaultFont(context)),
+                          Text('SIMON SHINJI',style: kDefaultFont(context),),
                         ],
                       ),
                       Row(
                         spacing: 5,
                         children: [
-                          Text('Edited By:', style: textTheme.small.copyWith(fontWeight: FontWeight.bold),),
-                          Text('SIMON SHINJI'),
+                          Text('Edited By:', style: kBoldedDefaultFont(context)),
+                          Text('SIMON SHINJI',style: kDefaultFont(context),),
                         ],
                       ),
                     ],
@@ -104,8 +103,8 @@ class OrderDetails extends StatelessWidget {
                   Row(
                     spacing: 5,
                     children: [
-                      Text('Status:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                      Text('Supplied'),
+                      Text('Status:',style: kBoldedDefaultFont(context)),
+                      Text('Supplied',style: kDefaultFont(context),),
                     ],
                   )
                 ],),
@@ -116,28 +115,28 @@ class OrderDetails extends StatelessWidget {
                   Row(
                     spacing: 5,
                     children: [
-                      Text('Place of Delivery:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                      Text('Mikocheni B ,')
+                      Text('Place of Delivery:',style: kBoldedDefaultFont(context)),
+                      Text('Mikocheni B ,',style: kDefaultFont(context),)
                     ],),
                   Row(
           
                     spacing: 5,
                     children: [
-                      Text('Delivery Truck:',style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                      Text('T 102 ABC')
+                      Text('Delivery Truck:',style: kBoldedDefaultFont(context)),
+                      Text('T 102 ABC',style: kDefaultFont(context),)
                     ],),
                 ],
               ),
-          
-              //Loading invoice details table
-              OrderDetailsDataTable(selectedOrder: orders),
+              SizedBox(height: 10),
+              //Loading orders details table
+              OrderDetailsDataTable(selectedOrder: order),
 
               //Remark Row Details
               Row(
                 spacing: 5,
                 children: [
-                  Text('Remarks:', style: textTheme.small.copyWith(fontWeight: FontWeight.bold)),
-                  Text('10% Discount given under 10% scheme in Jan 2026'),
+                  Text('Remarks:', style: kBoldedDefaultFont(context)),
+                  Text('10% Discount given under 10% scheme in Jan 2026',style: kDefaultFont(context),),
                 ],
               ),
 
@@ -154,71 +153,71 @@ class OrderDetails extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                          color: colorScheme.secondary,
+                          color: colorscheme.secondary,
                           borderRadius: BorderRadius.circular(7)
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                          Text('Total Qty', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                          Text('500')
+                          Text('Total Qty', style: kBoldedDefaultFont(context)),
+                          Text('500',style: kDefaultFont(context),)
                         ],),
                       ),
                       //Net Amount
                       Container(
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                            color: colorScheme.secondary,
+                            color: colorscheme.secondary,
                             borderRadius: BorderRadius.circular(7)
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Net Amount:', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
+                            Text('Net Amount:', style: kBoldedDefaultFont(context)),
                             Text('42,500'
-                                '')
+                                '',style: kDefaultFont(context),)
                           ],),
                       ),
                       //Exempted
                       Container(
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                            color: colorScheme.secondary,
+                            color: colorscheme.secondary,
                             borderRadius: BorderRadius.circular(7)
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Exempted ', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('0.00')
+                            Text('Exempted ', style: kBoldedDefaultFont(context)),
+                            Text('0.00',style: kDefaultFont(context),)
                           ],),
                       ),
                       //VAT
                       Container(
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                            color: colorScheme.secondary,
+                            color: colorscheme.secondary,
                             borderRadius: BorderRadius.circular(7)
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('VAT', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('7,500')
+                            Text('VAT', style: kBoldedDefaultFont(context)),
+                            Text('7,500',style: kDefaultFont(context),)
                           ],),
                       ),
                       //Grand Total
                       Container(
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                            color: colorScheme.secondary,
+                            color: colorscheme.secondary,
                             borderRadius: BorderRadius.circular(7)
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Grand Total', style: textTheme.small.copyWith(fontWeight: FontWeight.bold, fontSize: kWidgetFontSize)),
-                            Text('50,000')
+                            Text('Grand Total', style: kBoldedDefaultFont(context)),
+                            Text('50,000',style: kDefaultFont(context),)
                           ],),
                       ),
                     ],
@@ -232,7 +231,7 @@ class OrderDetails extends StatelessWidget {
   }
 }
 
-List<Map<String, dynamic>> invoice = [
+List<Map<String, dynamic>> order = [
   {
     '#': '1',
     'Description': 'Drinking Chocolate 12X450G',

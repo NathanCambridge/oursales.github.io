@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
 class InvoiceProvider  with ChangeNotifier{
-  List<Map<String, dynamic>>? invoices;
+  List<Map<String, dynamic>> invoices = [];
+  int? selectedInvoice;
 
   void getLatestInvoices(invoice){
     invoices = invoice;
+    notifyListeners();
+  }
+
+  void getSelectedInvoice(selected){
+    selectedInvoice = selected;
     notifyListeners();
   }
 }
